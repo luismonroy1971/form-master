@@ -50,8 +50,19 @@ export default function AdminPage() {
       Header: 'Fecha de Nacimiento',
       accessor: 'BirthDate',
       Cell: ({ value }: any) => {
+        // Asegurarse de que value es una fecha válida.
         const date = new Date(value);
-        return date.toLocaleDateString();
+        if (isNaN(date.getTime())) {
+          // Manejar adecuadamente valores inválidos.
+          return 'Fecha inválida';
+        } else {
+          // Especificar el locale y las opciones de formato.
+          return date.toLocaleDateString('es-ES', {
+            year: 'numeric',
+            month: '2-digit',
+            day: '2-digit',
+          });
+        }
       },
     },
     {
