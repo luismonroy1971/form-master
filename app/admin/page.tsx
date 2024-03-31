@@ -50,21 +50,17 @@ export default function AdminPage() {
       Header: 'Fecha de Nacimiento',
       accessor: 'BirthDate',
       Cell: ({ value }: any) => {
-        // Asegurarse de que value es una fecha válida.
+        // Crear fecha en UTC para evitar problemas de zona horaria
         const date = new Date(value);
-        if (isNaN(date.getTime())) {
-          // Manejar adecuadamente valores inválidos.
-          return 'Fecha inválida';
-        } else {
-          // Especificar el locale y las opciones de formato.
-          return date.toLocaleDateString('es-ES', {
-            year: 'numeric',
-            month: '2-digit',
-            day: '2-digit',
-          });
-        }
+        const utcDate = new Date(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate());
+    
+        return utcDate.toLocaleDateString('es-ES', {
+          year: 'numeric',
+          month: '2-digit',
+          day: '2-digit',
+        });
       },
-    },
+    },    
     {
       Header: 'Acciones',
       accessor: '_id',
